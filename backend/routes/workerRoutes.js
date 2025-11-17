@@ -7,7 +7,7 @@ const workerOnly = require("../middleware/workerOnly");
 const { upload, uploadImage } = require("../middleware/upload");
 
 const {
-  getAssignedReports,
+  getAllWorkerReports,
   updateReportStatusByWorker
 } = require("../controllers/workerController");
 
@@ -15,10 +15,10 @@ const {
 // 1️⃣ Worker: View all assigned reports
 // -----------------------------------------
 router.get(
-  "/assigned",
+  "/reports",
   auth,
   workerOnly,
-  getAssignedReports
+  getAllWorkerReports
 );
 
 // -----------------------------------------

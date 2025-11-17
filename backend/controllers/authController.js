@@ -40,3 +40,22 @@ exports.loginUser = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getMe = async (req, res) => {
+  try {
+    // req.user._id comes from your 'auth' middleware
+    const user = await User.findById(req.user._id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    // Send back the full, fresh user object
+    // This will include the up-to-date 'pendingTaskCount'
+    res.json(user);
+
+  } catch (error) {
+    console.error("GetMe error:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};

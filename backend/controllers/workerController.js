@@ -6,26 +6,41 @@ const User = require("../models/User");
 // -----------------------------------------------------
 // 1️⃣ GET ASSIGNED REPORTS (Worker Panel)
 // -----------------------------------------------------
-exports.getAssignedReports = async (req, res) => {
+exports.getAllWorkerReports = async (req, res) => {
   try {
     const workerId = req.user._id; // from auth middleware
 
+    // Fetch all reports assigned to this worker
     const reports = await Report.find({
-      assignedWorker: workerId,
-      status: { $in: ["Assigned", "Pending"] } // only active tasks
+      assignedWorker: workerId
     })
-      .sort({ 
-        severity: -1,     // High → Medium → Low
-        createdAt: -1     // newest first
-      });
+      .sort({
+        severity: -1,      // High → Low
+        createdAt: -1      // newest first
+      })
+      .select("-__v")
+      .populate("assignedWorker", "name email city"); // optional populate
 
-    res.json(reports);
+    // -------- Worker Stats (For Dashboard) --------
+    const stats = {
+      total: reports.length,
+      assigned: reports.filter(r => r.status === "Assigned").length,
+      completed: reports.filter(r => r.status === "Completed").length,
+      declined: reports.filter(r => r.status === "Declined").length
+    };
+
+    // Send both stats + reports to frontend
+    res.json({
+      stats,
+      reports
+    });
 
   } catch (error) {
-    console.error("getAssignedReports Error:", error);
-    res.status(500).json({ message: "Failed to fetch assigned reports" });
+    console.error("getAllWorkerReports Error:", error);
+    res.status(500).json({ message: "Failed to fetch worker reports" });
   }
 };
+
 
 // -----------------------------------------------------
 // 2️⃣ UPDATE REPORT STATUS (Completed / Declined)
