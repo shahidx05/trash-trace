@@ -5,12 +5,12 @@ import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
 // --- FIXED --- All icons from fa6
-import { 
-  FaCamera, 
-  FaChevronLeft, 
-  FaSpinner, 
-  FaMapMarkerAlt 
-} from "react-icons/fa6";
+import {
+    FaCamera,
+    FaChevronLeft,
+    FaSpinner,
+    FaMapMarkerAlt
+} from "react-icons/fa";
 
 // Leaflet
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';

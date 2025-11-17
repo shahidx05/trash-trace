@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // Fixed icons - all from fa6
-import { FaChevronLeft, FaSearch } from "react-icons/fa6";
+import { FaChevronLeft, FaSearch } from "react-icons/fa";
 
 
 function TrackReportPage() {

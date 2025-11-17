@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import api from '../services/api.js'; // --- FIXED: Added .js
+import api from '../services/api.js'; //
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
@@ -9,21 +9,20 @@ import {
   FaSpinner,
   FaHourglassHalf,
   FaChevronLeft,
-  FaCircleCheck,         // Replaced FaCheckCircle
-  FaCircleXmark,        // Replaced FaTimesCircle
-  FaMapMarkerAlt,
+  FaCircleCheck,
+  FaCircleXmark,
+  FaLocationDot, // --- THIS IS THE FIX ---
   FaCity,
-  FaTriangleExclamation, // Replaced FaExclamationTriangle
+  FaTriangleExclamation, 
   FaImage,
-  FaComment,             // Replaced FaCommentAlt
-  FaUserGear             // Replaced FaUserCog
+  FaComment,
+  FaUserGear
 } from "react-icons/fa6";
 
 
 // Loading component
 const LoadingSpinner = () => (
   <div className="flex flex-col items-center justify-center h-64">
-    {/* --- FIXED --- */}
     <FaSpinner className="animate-spin text-green-600 text-4xl" />
     <p className="mt-4 text-gray-600">Loading Report Details...</p>
   </div>
@@ -75,13 +74,11 @@ const StatusTracker = ({ status }) => {
         {statuses.map((item, index) => (
           <React.Fragment key={item.name}>
             <div className="flex-1 text-center">
-              {/* --- FIXED --- */}
               <div className={`mx-auto h-10 w-10 rounded-full flex items-center justify-center ${
                 index <= currentStatusIndex ? 'bg-green-600' : 'bg-gray-300'
               }`}>
                 <span className="text-white text-xl">{item.icon}</span>
               </div>
-              {/* --- FIXED --- */}
               <p className={`mt-2 font-medium ${
                 index <= currentStatusIndex ? 'text-green-700' : 'text-gray-500'
               }`}>
@@ -89,7 +86,6 @@ const StatusTracker = ({ status }) => {
               </p>
             </div>
             {index < statuses.length - 1 && (
-              // --- FIXED ---
               <div className={`flex-1 h-1 ${
                 index < currentStatusIndex ? 'bg-green-600' : 'bg-gray-300'
               }`} />
@@ -114,8 +110,7 @@ function ReportStatusPage() {
       setLoading(true);
       setError(null);
       try {
-        // Backend se /api/reports/track/:id call karein
-        const response = await api.get(`/reports/track/${reportId}`);
+        const response = await api.get(`/reports/track/${reportId}`); //
         setReport(response.data);
       } catch (err) {
         console.error("Fetch report error:", err);
@@ -132,7 +127,6 @@ function ReportStatusPage() {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow-md">
         <div className="max-w-4xl mx-auto p-4 flex items-center">
-          {/* --- FIXED --- */}
           <Link to="/track" className="text-gray-600 hover:text-green-600">
             <FaChevronLeft className="h-5 w-5" />
           </Link>
@@ -175,7 +169,8 @@ function ReportStatusPage() {
                     <span>City: <strong className="font-medium">{report.city}</strong></span>
                   </div>
                   <div className="flex items-center col-span-1 md:col-span-2">
-                    <FaMapMarkerAlt className="h-5 w-5 text-gray-500 mr-3" />
+                    {/* --- THIS IS THE FIX --- */}
+                    <FaLocationDot className="h-5 w-5 text-gray-500 mr-3" />
                     <span>Address: <strong className="font-medium">{report.address || 'N/A'}</strong></span>
                   </div>
                 </div>

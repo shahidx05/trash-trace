@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-// Icons: FIXED - All from fa6
-import { FaCirclePlus, FaSearch } from "react-icons/fa6";
+// --- FIXED --- Standardized on 'fa'
+import { FaPlusCircle, FaSearch } from "react-icons/fa"; // Replaced FaCirclePlus
 
 function Hero() {
   // Animation variants
@@ -46,10 +46,9 @@ function Hero() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            // --- FIXED ---
             className="w-full md:w-auto flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-green-600 rounded-full shadow-lg hover:bg-green-700"
           >
-            <FaCirclePlus className="mr-2" />
+            <FaPlusCircle className="mr-2" />
             Submit a New Report
           </motion.button>
         </Link>
@@ -59,7 +58,6 @@ function Hero() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            // --- FIXED ---
             className="w-full md:w-auto flex items-center justify-center px-8 py-3 text-base font-medium text-green-700 bg-white border border-gray-300 rounded-full shadow-lg hover:bg-gray-50"
           >
             <FaSearch className="mr-2" />
