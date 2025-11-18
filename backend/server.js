@@ -9,17 +9,14 @@ const app = express();
 const cors = require("cors");
 
 app.use(cors({
-  origin: [
-    "https://green-report.vercel.app",
-    "http://localhost:5173",
-    "http://localhost:3000"
-  ],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-  preflightContinue: false,
-  optionsSuccessStatus: 204
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    return callback(null, true);  // Allow all origins temporarily
+  },
+  credentials: true
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
